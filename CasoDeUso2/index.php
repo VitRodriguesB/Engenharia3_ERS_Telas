@@ -1,19 +1,35 @@
 <?php include 'header.php'; ?>
-<div class="container text-center">
-    <h2 class="mb-4">Bem-vindo ao Sistema de Leitura 📖</h2>
-    <p>Escolha uma funcionalidade:</p>
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="list-group">
-                <a href="ajuste_leitura.php" class="list-group-item list-group-item-action">📖 Ajuste de Leitura</a>
-                <a href="pesquisa.php" class="list-group-item list-group-item-action">🔍 Pesquisa</a>
-                <a href="tempo_leitura.php" class="list-group-item list-group-item-action">⏳ Análise de Tempo de Leitura</a>
-                <a href="notas_colaborativas.php" class="list-group-item list-group-item-action">📝 Notas Colaborativas</a>
-                <a href="leitura_grupo.php" class="list-group-item list-group-item-action">👥 Leitura em Grupo</a>
-                <a href="marcacao_paginas.php" class="list-group-item list-group-item-action">📌 Marcação de Páginas</a>
-                <a href="progresso_leitura.php" class="list-group-item list-group-item-action">💾 Salvamento de Progresso</a>
-            </div>
-        </div>
-    </div>
+
+<div class="text-center mb-5">
+    <h2 class="fw-bold">Bem-vindo ao Sistema de Leitura 📖</h2>
+    <p class="text-muted">Explore os recursos abaixo para melhorar sua experiência de leitura.</p>
 </div>
-<?php include 'footer.php'; ?>
+
+<div class="row g-4 justify-content-center">
+    <?php 
+        $features = [
+            ["Ajuste de Leitura", "📖", "ajuste_leitura.php"],
+            ["Pesquisa", "🔍", "pesquisa.php"],
+            ["Análise de Tempo", "⏳", "tempo_leitura.php"],
+            ["Notas Colaborativas", "📝", "notas_colaborativas.php"],
+            ["Leitura em Grupo", "👥", "leitura_grupo.php"],
+            ["Marcação de Páginas", "📌", "marcacao_paginas.php"],
+            ["Salvamento de Progresso", "💾", "progresso_leitura.php"]
+        ];
+
+        foreach ($features as $feature) {
+            echo "
+            <div class='col-md-4'>
+                <div class='card feature-card text-center'>
+                    <div class='card-body'>
+                        <span class='icon'>{$feature[1]}</span>
+                        <h5 class='card-title mt-3'>{$feature[0]}</h5>
+                        <a href='{$feature[2]}' class='btn btn-primary mt-2'>Acessar</a>
+                    </div>
+                </div>
+            </div>";
+        }
+    ?>
+</div>
+
+<?php include 'rodape.php'; ?>

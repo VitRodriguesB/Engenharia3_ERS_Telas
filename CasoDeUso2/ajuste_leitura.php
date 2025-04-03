@@ -1,42 +1,72 @@
-<?php
-session_start();
-$cor_fundo = $_SESSION['cor_fundo'] ?? 'white';
-$cor_texto = $_SESSION['cor_texto'] ?? 'black';
-$tamanho_fonte = $_SESSION['tamanho_fonte'] ?? '16px';
+<?php 
+session_start(); 
+include 'header.php'; 
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $_SESSION['cor_fundo'] = $_POST['cor_fundo'];
-    $_SESSION['cor_texto'] = $_POST['cor_texto'];
-    $_SESSION['tamanho_fonte'] = $_POST['tamanho_fonte'];
-    header("Location: " . $_SERVER["PHP_SELF"]);
-    exit();
+// Inicializa as configurações padrão caso não existam
+if (!isset($_SESSION['config_leitura'])) {
+    $_SESSION['config_leitura'] = [
+        'cor_fundo' => '#ffffff',
+        'cor_fonte' => '#000000',
+        'tamanho_fonte' => '16px'
+    ];
 }
-?>
-<!DOCTYPE html>
-<html lang="pt">
-<head>
-    <meta charset="UTF-8">
-    <title>Ajuste de Leitura</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body style="background: <?= $cor_fundo ?>; color: <?= $cor_texto ?>; font-size: <?= $tamanho_fonte ?>;">
 
-<div class="container mt-5">
-    <h2>Ajuste de Leitura</h2>
-    <form method="post">
-        <label>Cor de Fundo:</label>
-        <input type="color" name="cor_fundo" value="<?= $cor_fundo ?>" class="form-control">
-        <label>Cor do Texto:</label>
-        <input type="color" name="cor_texto" value="<?= $cor_texto ?>" class="form-control">
-        <label>Tamanho da Fonte:</label>
-        <select name="tamanho_fonte" class="form-control">
-            <option value="14px" <?= ($tamanho_fonte == '14px') ? 'selected' : '' ?>>Pequena</option>
-            <option value="16px" <?= ($tamanho_fonte == '16px') ? 'selected' : '' ?>>Média</option>
-            <option value="18px" <?= ($tamanho_fonte == '18px') ? 'selected' : '' ?>>Grande</option>
-        </select>
-        <button type="submit" class="btn btn-primary mt-3">Salvar Preferências</button>
-    </form>
+// Se o formulário for enviado, salva as novas configurações
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $_SESSION['config_leitura'] = [
+        'cor_fundo' => $_POST['cor_fundo'],
+        'cor_fonte' => $_POST['cor_fonte'],
+        'tamanho_fonte' => $_POST['tamanho_fonte'] . 'px'
+    ];
+}
+
+$config = $_SESSION['config_leitura'];
+?>
+
+<div class="container mt-4">
+    <h2 class="fw-bold text-center">📖 Ajuste de Leitura</h2>
+    <p class="text-muted text-center">Personalize sua experiência de leitura.</p>
+
+    <div class="card shadow p-4">
+        <form method="POST">
+            <div class="mb-3">
+                <label class="form-label fw-bold">🎨 Cor do Fundo</label>
+                <input type="color" name="cor_fundo" class="form-control form-control-color" value="<?= $config['cor_fundo'] ?>" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-bold">🖋 Cor da Fonte</label>
+                <input type="color" name="cor_fonte" class="form-control form-control-color" value="<?= $config['cor_fonte'] ?>" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-bold">🔠 Tamanho da Fonte</label>
+                <select name="tamanho_fonte" class="form-select" required>
+                    <?php 
+                    $tamanhos = ['14', '16', '18', '20', '22', '24'];
+                    foreach ($tamanhos as $tamanho) {
+                        $selected = ($config['tamanho_fonte'] == $tamanho . 'px') ? 'selected' : '';
+                        echo "<option value='$tamanho' $selected>{$tamanho}px</option>";
+                    }
+                    ?>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">💾 Salvar Ajustes</button>
+        </form>
+    </div>
+
+    <h4 class="mt-5 text-center">📚 Prévia da Leitura</h4>
+    <div id="preview" class="preview-box mt-3 p-3">
+        <p>“A leitura é para o intelecto o que o exercício é para o corpo.”</p>
+    </div>
 </div>
 
-</body>
-</html>
+<script>
+    // Aplica as configurações de leitura na prévia
+    document.getElementById('preview').style.backgroundColor = "<?= $config['cor_fundo'] ?>";
+    document.getElementById('preview').style.color = "<?= $config['cor_fonte'] ?>";
+    document.getElementById('preview').style.fontSize = "<?= $config['tamanho_fonte'] ?>";
+</script>
+
+<?php include 'rodape.php'; ?>
