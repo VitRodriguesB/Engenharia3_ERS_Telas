@@ -1,24 +1,36 @@
-/* Fonte e estrutura geral */
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f4f4f9;
+/* Navbar fixa no topo */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: #343a40; /* Cor escura para destacar */
+    color: white;
+    padding: 10px 0;
+    z-index: 1000; /* Garante que fique acima de outros elementos */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Navbar */
-.navbar {
-    padding: 15px 0;
-}
+/* Ajusta os links da navbar */
 .navbar-brand {
     font-size: 1.5rem;
+    color: white;
 }
 .navbar-nav .nav-link {
     font-size: 1rem;
     padding: 10px 15px;
+    color: white;
     transition: 0.3s;
 }
 .navbar-nav .nav-link:hover {
-    color: #f8d210;
+    color: #f8d210; /* Destaque ao passar o mouse */
 }
+
+/* Adiciona espaço para que o conteúdo não fique oculto pela navbar */
+body {
+    padding-top: 60px; /* Ajusta conforme a altura da navbar */
+}
+
 
 /* Container principal */
 .container {
@@ -47,8 +59,15 @@ body {
 }
 
 /* Rodapé */
-footer {
-    font-size: 0.9rem;
+
+.footer {
+    background: #000;
+    color: white;
+    text-align: center;
+    padding: 5px 0;  /* Reduzindo a altura */
+    font-size: 0.8rem;  /* Tamanho menor para um visual mais clean */
+    position: relative;
+    width: 100%;
 }
 /* Estilização do formulário */
 .card {

@@ -1,6 +1,6 @@
 </div> <!-- Fecha container principal -->
 
-<footer>
+<footer class="footer">
     <p>&copy; <?= date('Y') ?> Sistema de Leitura - Todos os direitos reservados.</p>
 </footer>
 

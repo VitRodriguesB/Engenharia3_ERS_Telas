@@ -4,30 +4,47 @@ if (!isset($_SESSION["notas"])) {
     $_SESSION["notas"] = [];
 }
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST["nota"])) {
+// Adiciona nota
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["nota"]) && !empty($_POST["nota"])) {
     $_SESSION["notas"][] = htmlspecialchars($_POST["nota"]);
 }
+
+// Remove nota
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["remover"])) {
+    $indice = $_POST["remover"];
+    if (isset($_SESSION["notas"][$indice])) {
+        array_splice($_SESSION["notas"], $indice, 1);
+    }
+}
+
+include 'header.php'; // Inclui a navbar fixa
 ?>
-<!DOCTYPE html>
-<html lang="pt">
-<head>
-    <meta charset="UTF-8">
-    <title>Notas Colaborativas</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body class="bg-light">
+
 <div class="container mt-5">
-    <h2>Notas Colaborativas</h2>
-    <form method="post">
-        <textarea name="nota" class="form-control"></textarea>
-        <button type="submit" class="btn btn-success mt-2">Adicionar Nota</button>
-    </form>
-    <h3 class="mt-4">Notas Salvas:</h3>
-    <ul class="list-group">
-        <?php foreach ($_SESSION["notas"] as $nota): ?>
-            <li class="list-group-item"><?= $nota ?></li>
-        <?php endforeach; ?>
-    </ul>
+    <div class="card shadow-sm p-4">
+        <h2 class="text-center text-primary">Notas Colaborativas</h2>
+        
+        <!-- Formulário de Adição de Nota -->
+        <form method="post" class="mt-3">
+            <label for="nota" class="form-label fw-bold">Adicionar uma Nota:</label>
+            <textarea name="nota" id="nota" class="form-control" rows="3" placeholder="Digite sua nota..." required></textarea>
+            <button type="submit" class="btn btn-success mt-2 w-100">Adicionar Nota</button>
+        </form>
+
+        <!-- Lista de Notas Salvas -->
+        <h3 class="mt-4 text-secondary">Notas Salvas:</h3>
+        <ul class="list-group mt-2">
+            <?php foreach ($_SESSION["notas"] as $indice => $nota): ?>
+                <li class="list-group-item d-flex justify-content-between align-items-center bg-light border-left border-primary">
+                    <span class="fw-bold text-dark"><?= $nota ?></span>
+                    <form method="post" class="d-inline">
+                        <input type="hidden" name="remover" value="<?= $indice ?>">
+                        <button type="submit" class="btn btn-danger btn-sm">Remover</button>
+                    </form>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
 </div>
-</body>
-</html>
+
+<?php include 'rodape.php'; ?> <!-- Adiciona o rodapé -->
