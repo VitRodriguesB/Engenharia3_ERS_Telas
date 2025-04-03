@@ -1,22 +1,27 @@
 <?php
-$tempo_por_pagina = 30;
-$paginas_restantes = 10;
-$tempo_estimado = $paginas_restantes * $tempo_por_pagina;
-?>
-<!DOCTYPE html>
-<html lang="pt">
-<head>
-    <meta charset="UTF-8">
-    <title>Tempo de Leitura</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body class="bg-light">
+// tempo_leitura.php
+include 'conexao.php';
+session_start();
 
-<div class="container mt-5">
-    <h2>Estimativa de Tempo de Leitura</h2>
-    <p>Páginas restantes: <strong><?= $paginas_restantes ?></strong></p>
-    <p>Tempo estimado: <strong><?= $tempo_estimado ?> segundos</strong></p>
-</div>
+if (!isset($_SESSION['usuario_id'])) {
+    echo json_encode(["status" => "erro", "mensagem" => "Usuário não autenticado"]);
+    exit;
+}
 
-</body>
-</html>
+$usuario_id = $_SESSION['usuario_id'];
+$ebook_id = $_POST['ebook_id'];
+$tempo_por_pagina = $_POST['tempo_por_pagina'];
+
+$sql = "INSERT INTO tempo_leitura (usuario_id, ebook_id, tempo_por_pagina) VALUES (?, ?, ?) 
+        ON DUPLICATE KEY UPDATE tempo_por_pagina = VALUES(tempo_por_pagina)";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("iid", $usuario_id, $ebook_id, $tempo_por_pagina);
+
+if ($stmt->execute()) {
+    echo json_encode(["status" => "sucesso", "mensagem" => "Tempo de leitura atualizado"]);
+} else {
+    echo json_encode(["status" => "erro", "mensagem" => "Erro ao atualizar tempo de leitura"]);
+}
+
+$stmt->close();
+$conn->close();
