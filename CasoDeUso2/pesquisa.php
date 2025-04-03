@@ -59,4 +59,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['termo'])) {
     </div>
 </div>
 
-<?php include 'rodape.php'; ?>
+<?php include 'footer.php'; ?>

@@ -69,4 +69,4 @@ $config = $_SESSION['config_leitura'];
     document.getElementById('preview').style.fontSize = "<?= $config['tamanho_fonte'] ?>";
 </script>
 
-<?php include 'rodape.php'; ?>
+<?php include 'footer.php'; ?>

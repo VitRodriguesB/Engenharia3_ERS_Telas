@@ -280,3 +280,26 @@ html, body {
 .btn-remover:hover {
     background-color: #c82333;
 }
+
+.card-link {
+    text-decoration: none;  /* Remove o sublinhado */
+    color: inherit;         /* Mantém a cor padrão do texto */
+    display: block;
+}
+
+.card-link:hover {
+    color: inherit;  /* Garante que a cor não mude ao passar o mouse */
+}
+html, body {
+    height: 100%;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.main-content {
+    flex: 1;
+}

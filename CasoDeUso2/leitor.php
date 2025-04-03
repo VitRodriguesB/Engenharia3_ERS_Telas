@@ -64,4 +64,4 @@ function atualizarPagina() {
 }
 </script>
 
-<?php include 'rodape.php'; ?>
+<?php include 'footer.php'; ?>

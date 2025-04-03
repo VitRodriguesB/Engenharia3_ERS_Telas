@@ -61,4 +61,4 @@ if (isset($_GET['remover'])) {
     </div>
 </div>
 
-<?php include 'rodape.php'; ?>
+<?php include 'footer.php'; ?>

@@ -17,7 +17,7 @@ include 'header.php';
     </div>
 </div>
 
-<?php include 'rodape.php'; ?>
+<?php include 'footer.php'; ?>
 
 <script>
     function criarGrupo() {

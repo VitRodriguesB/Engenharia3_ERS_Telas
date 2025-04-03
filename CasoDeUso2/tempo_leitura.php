@@ -14,7 +14,7 @@
     <p id="resultado" class="resultado">Informe os valores acima para calcular.</p>
 </div>
 
-<?php include 'rodape.php'; ?>
+<?php include 'footer.php'; ?>
 
 <script>
     function calcularTempo() {

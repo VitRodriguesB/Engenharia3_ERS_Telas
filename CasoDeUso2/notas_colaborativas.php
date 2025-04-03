@@ -47,4 +47,4 @@ include 'header.php'; // Inclui a navbar fixa
     </div>
 </div>
 
-<?php include 'rodape.php'; ?> <!-- Adiciona o rodapé -->
+<?php include 'footer.php'; ?> <!-- Adiciona o rodapé -->
