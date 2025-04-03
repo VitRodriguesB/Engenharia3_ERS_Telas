@@ -18,3 +18,29 @@ include 'header.php';
 </div>
 
 <?php include 'rodape.php'; ?>
+
+<script>
+    function criarGrupo() {
+        let nomeGrupo = document.getElementById('nome_grupo').value.trim();
+
+        if (nomeGrupo === '') {
+            alert('Por favor, insira um nome para o grupo.');
+            return;
+        }
+
+        let listaGrupos = document.getElementById('lista-grupos');
+        let novoGrupo = document.createElement('div');
+        novoGrupo.classList.add('grupo-item');
+        novoGrupo.innerHTML = `
+            <span>${nomeGrupo}</span>
+            <button class="btn-remover" onclick="removerGrupo(this)">Remover</button>
+        `;
+        listaGrupos.appendChild(novoGrupo);
+
+        document.getElementById('nome_grupo').value = '';
+    }
+
+    function removerGrupo(botao) {
+        botao.parentElement.remove();
+    }
+</script>
