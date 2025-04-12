@@ -1,22 +1,41 @@
-<?php
-$tempo_por_pagina = 30;
-$paginas_restantes = 10;
-$tempo_estimado = $paginas_restantes * $tempo_por_pagina;
-?>
-<!DOCTYPE html>
-<html lang="pt">
-<head>
-    <meta charset="UTF-8">
-    <title>Tempo de Leitura</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body class="bg-light">
+<link rel="stylesheet" href="tempo_leitura.css">
+<?php include 'header.php'; ?>
 
-<div class="container mt-5">
-    <h2>Estimativa de Tempo de Leitura</h2>
-    <p>Páginas restantes: <strong><?= $paginas_restantes ?></strong></p>
-    <p>Tempo estimado: <strong><?= $tempo_estimado ?> segundos</strong></p>
+<div class="container">
+    <h2 class="titulo">⏳ Estimativa de Tempo de Leitura</h2>
+    
+    <div class="tempo-form">
+        <input type="number" id="total_paginas" placeholder="Total de Páginas" min="1" required>
+        <input type="number" id="tempo_por_pagina" placeholder="Tempo Médio por Página (min)" min="1" required>
+        <button class="btn-calcular" type="button" onclick="calcularTempo()">Calcular Tempo</button>
+    </div>
+
+    <h3 class="subtitulo">⏱ Tempo Restante:</h3>
+    <p id="resultado" class="resultado">Informe os valores acima para calcular.</p>
 </div>
 
-</body>
-</html>
+<?php include 'footer.php'; ?>
+
+<script>
+    function calcularTempo() {
+        let totalPaginas = parseInt(document.getElementById('total_paginas').value);
+        let tempoPorPagina = parseInt(document.getElementById('tempo_por_pagina').value);
+
+        if (isNaN(totalPaginas) || isNaN(tempoPorPagina) || totalPaginas <= 0 || tempoPorPagina <= 0) {
+            document.getElementById('resultado').innerText = "⚠️ Insira valores válidos.";
+            document.getElementById('resultado').style.color = "red";
+            return;
+        }
+
+        let tempoTotal = totalPaginas * tempoPorPagina;
+        let horas = Math.floor(tempoTotal / 60);
+        let minutos = tempoTotal % 60;
+
+        let resultado = horas > 0 
+            ? `📖 ${horas}h ${minutos}min restantes.` 
+            : `📖 ${minutos} minutos restantes.`;
+
+        document.getElementById('resultado').innerText = resultado;
+        document.getElementById('resultado').style.color = "#007bff";
+    }
+</script>
